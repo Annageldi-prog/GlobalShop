@@ -3,13 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Author;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Product;
 use App\Models\Seasons;
-use App\Models\Series;
 use App\Models\Size;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -20,11 +18,17 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = Product::orderBy('id', 'asc')->get();
+        $products = Product::with([
+            'category',
+            'brand',
+            'country',
+            'season',
+            'size'
+        ])->get();
 
-        $products = Product::with(['category','brand'])->latest()->get();
         return view('admin.product.index', compact('products'));
     }
+
 
     public function show(Product $product)
     {
@@ -45,20 +49,19 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id' => 'required|exists:brands,id',
-            'country_id' => 'required|exists:countries,id',
-            'season_id' => 'required|exists:seasons,id',
-            'size_id' => 'required|exists:sizes,id',
-            'gender' => 'required|string',
+            'name' => 'required',
+            'category_id' => 'required',
+            'brand_id' => 'required',
+            'country_id' => 'required',
+            'season_id' => 'required',
+            'size_id' => 'required',
+            'gender' => 'required',
             'base_price' => 'required|numeric',
-            'description' => 'nullable|string',
         ]);
 
         Product::create([
             'name' => $request->name,
-            'slug' => \Str::slug($request->name),
+            'slug' => Str::slug($request->name . '-' . time()), // уникальный slug
             'category_id' => $request->category_id,
             'brand_id' => $request->brand_id,
             'country_id' => $request->country_id,
@@ -69,7 +72,8 @@ class ProductController extends Controller
             'description' => $request->description,
         ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product added successfully!');
+        return redirect()->route('admin.product.index')
+            ->with('success', 'Product added successfully!');
     }
 
     public function edit($id)

@@ -7,9 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'code', 'base_price', 'description', 'gender',
-        'category_id', 'brand_id', 'season_id'
+        'name',
+        'slug',
+        'category_id',
+        'brand_id',
+        'country_id',
+        'season_id',
+        'size_id',
+        'gender',
+        'base_price',
+        'description',
     ];
+
+
 
     // Связи
     public function category() {
@@ -22,6 +32,16 @@ class Product extends Model
 
     public function season() {
         return $this->belongsTo(Seasons::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
     }
 
     public function variants() {
