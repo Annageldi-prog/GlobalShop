@@ -27,6 +27,7 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as $p) {
+
             $product = Product::updateOrCreate(
                 ['slug' => Str::slug($p['name'])],
                 [
@@ -37,36 +38,30 @@ class ProductSeeder extends Seeder
                     'gender' => $p['gender'],
                     'category_id' => Category::inRandomOrder()->first()?->id,
                     'brand_id' => Brand::inRandomOrder()->first()?->id,
-                    'country_id' => Country::inRandomOrder()->first()?->id,
-                    'size_id' => Country::inRandomOrder()->first()?->id,
                 ]
             );
 
-
-            // Добавляем размеры
-            $sizes = Size::all();
-            foreach ($sizes as $size) {
+            foreach (Size::all() as $size) {
                 ProductVariant::updateOrCreate(
                     [
                         'product_id' => $product->id,
-                        'size_id' => $size->id
+                        'size_id' => $size->id,
                     ],
                     [
-                        'stock' => rand(5, 20)
+                        'stock' => rand(5, 20),
                     ]
                 );
             }
 
-            // Добавляем цены для стран
-            $countries = Country::all();
-            foreach ($countries as $country) {
+            foreach (Country::all() as $country) {
                 RegionalPrice::updateOrCreate(
                     [
                         'product_id' => $product->id,
-                        'country_id' => $country->id
+                        'country_id' => $country->id,
                     ],
                     [
-                        'price' => round($product->base_price * $country->rate, 2)
+                        'price' => round($product->base_price * ($country->rate ?? 1), 2),
+                        'currency' => $country->currency ?? 'USD', 
                     ]
                 );
             }

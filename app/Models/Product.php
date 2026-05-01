@@ -11,44 +11,46 @@ class Product extends Model
         'slug',
         'category_id',
         'brand_id',
-        'country_id',
         'season_id',
-        'size_id',
         'gender',
         'base_price',
         'description',
     ];
 
 
-
-    // Связи
-    public function category() {
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function brand() {
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
 
-    public function season() {
+    public function season()
+    {
         return $this->belongsTo(Seasons::class);
     }
 
-    public function country()
+   
+    public function variants()
     {
-        return $this->belongsTo(Country::class);
-    }
-
-    public function size()
-    {
-        return $this->belongsTo(Size::class);
-    }
-
-    public function variants() {
         return $this->hasMany(ProductVariant::class);
     }
 
-    public function regionalPrices() {
+    public function regionalPrices()
+    {
         return $this->hasMany(RegionalPrice::class);
+    }
+
+    public function countries()
+    {
+        return $this->belongsToMany(
+            Country::class,
+            'regional_prices',
+            'product_id',
+            'country_id'
+        )->withPivot('price');
     }
 }

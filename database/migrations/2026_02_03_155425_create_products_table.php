@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->constrained()->onDelete('cascade');
             $table->foreignId('season_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('country_id')->constrained()->cascadeOnDelete();
             $table->foreignId('size_id')->constrained()->cascadeOnDelete();
             $table->enum('gender', ['man', 'woman', 'boy', 'girl', 'unisex']);
             $table->decimal('base_price', 10, 2);

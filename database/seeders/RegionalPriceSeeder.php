@@ -16,11 +16,18 @@ class RegionalPriceSeeder extends Seeder
 
         foreach ($products as $product) {
             foreach ($countries as $country) {
-                RegionalPrice::create([
-                    'product_id' => $product->id,
-                    'country_id' => $country->id,
-                    'price' => round($product->base_price * $country->rate, 2),
-                ]);
+
+                RegionalPrice::updateOrCreate(
+                    [
+                        'product_id' => $product->id,
+                        'country_id' => $country->id,
+                    ],
+                    [
+                        'price' => round($product->base_price * ($country->rate ?? 1), 2),
+                        'currency' => $country->currency ?? 'USD', 
+                    ]
+                );
+
             }
         }
     }

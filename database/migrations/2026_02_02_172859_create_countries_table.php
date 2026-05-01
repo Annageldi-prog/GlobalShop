@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('currency', 10);
             $table->string('symbol', 5);
-            $table->decimal('rate', 10, 2)->default(1); // курс к базовой валюте
+            $table->decimal('rate', 10, 2)->default(1);
             $table->timestamps();
         });
     }

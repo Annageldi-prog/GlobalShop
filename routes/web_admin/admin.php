@@ -27,17 +27,13 @@ Route::prefix('admin')
 
 
         Route::middleware(['auth', 'admin'])->group(function () {
-
-            // Dashboard
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-            // Categories
             Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('{id}', 'show')->name('show');
             });
 
-            // Brands
+           
             Route::prefix('brands')->name('brands.')->controller(BrandController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
@@ -46,25 +42,25 @@ Route::prefix('admin')
                 Route::get('{id}', 'show')->name('show');
             });
 
-            // Countries
+           
             Route::prefix('country')->name('country.')->controller(CountryController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('{id}', 'show')->name('show');
             });
 
-            // Sizes
+           
             Route::prefix('size')->name('size.')->controller(SizeController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('{id}', 'show')->name('show');
             });
 
-            // Seasons
+           
             Route::prefix('season')->name('season.')->controller(SeasonsController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('{id}', 'show')->name('show');
             });
 
-            // Products
+         
             Route::prefix('product')->name('product.')->controller(ProductController::class)->group(function () {
                 Route::get('', 'index')->name('index');
                 Route::get('create', 'create')->name('create');

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // Показываем форму логина
     public function create()
     {
         if (Auth::check() && auth()->user()->is_admin) {
@@ -18,7 +17,7 @@ class AuthController extends Controller
         return view('admin.auth.login');
     }
 
-    // Логиним
+    
     public function store(Request $request)
     {
         $credentials = $request->validate([
@@ -42,7 +41,7 @@ class AuthController extends Controller
             ->onlyInput('username');
     }
 
-    // Логаут
+   
     public function destroy(Request $request)
     {
         Auth::logout();

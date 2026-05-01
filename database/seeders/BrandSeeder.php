@@ -24,7 +24,7 @@ class BrandSeeder extends Seeder
                 ['slug' => Str::slug($brand)],
                 [
                     'name' => $brand,
-                    'country_id' => Country::inRandomOrder()->first()?->id, // случайная страна
+                    'country_id' => Country::inRandomOrder()->first()?->id, 
                 ]
             );
         }

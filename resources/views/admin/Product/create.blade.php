@@ -3,127 +3,185 @@
 @section('title', 'Add Product')
 
 @section('content')
-    <div class="container-lg py-4">
-        <h2 class="text-dark mb-4 fw-bold">Add Product</h2>
+<div class="container-lg py-4">
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <h2 class="text-dark mb-4 fw-bold">Add Product</h2>
 
-        <form action="{{ route('admin.product.store') }}" method="POST" class="bg-dark p-4 rounded shadow form-box">
-            @csrf
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-            {{-- Product Name --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Product Name</label>
-                <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-            </div>
+    <form action="{{ route('admin.product.store') }}" method="POST" class="bg-dark p-4 rounded shadow form-box">
+        @csrf
 
-            {{-- Category --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Category</label>
-                <select name="category_id" class="form-select" required>
-                    <option value="">Select Category</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+     
+        <div class="mb-3">
+            <label class="form-label text-light">Product Name</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+        </div>
 
-            {{-- Brand --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Brand</label>
-                <select name="brand_id" class="form-select" required>
-                    <option value="">Select Brand</option>
-                    @foreach($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
-                            {{ $brand->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+    
+        <div class="mb-3">
+            <label class="form-label text-light">Category</label>
+            <select name="category_id" class="form-select" required>
+                <option value="">Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            {{-- Country --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Country</label>
-                <select name="country_id" class="form-select" required>
-                    <option value="">Select Country</option>
-                    @foreach($countries as $country)
-                        <option value="{{ $country->id }}" {{ old('country_id') == $country->id ? 'selected' : '' }}>
-                            {{ $country->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+       
+        <div class="mb-3">
+            <label class="form-label text-light">Brand</label>
+            <select name="brand_id" class="form-select" required>
+                <option value="">Select Brand</option>
+                @foreach($brands as $brand)
+                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            {{-- Season --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Season</label>
-                <select name="season_id" class="form-select" required>
-                    <option value="">Select Season</option>
-                    @foreach($seasons as $season)
-                        <option value="{{ $season->id }}" {{ old('season_id') == $season->id ? 'selected' : '' }}>
-                            {{ $season->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+    
+        <div class="mb-3">
+            <label class="form-label text-light">Countries & Prices</label>
 
-            {{-- Size --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Size</label>
-                <select name="size_id" class="form-select" required>
-                    <option value="">Select Size</option>
-                    @foreach($sizes as $size)
-                        <option value="{{ $size->id }}" {{ old('size_id') == $size->id ? 'selected' : '' }}>
-                            {{ $size->name }}
-                        </option>
-                    @endforeach
-                </select>
+            <div id="countries-wrapper">
+                <div class="country-item d-flex gap-2 mb-2">
+
+                    <select name="countries[0][id]" class="form-select" required>
+                        <option value="">Country</option>
+                        @foreach($countries as $country)
+                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <input type="number" step="0.01" name="countries[0][price]" class="form-control" placeholder="Price" required>
+
+                    <select name="countries[0][currency]" class="form-select" required>
+                        <option value="">Currency</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                        <option value="CAD">CAD</option>
+                        <option value="TRY">TRY</option>
+                    </select>
+
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this)">❌</button>
+                </div>
             </div>
 
-            {{-- Gender --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Gender</label>
-                <select name="gender" class="form-select" required>
-                    <option value="">Select Gender</option>
-                    <option value="man" {{ old('gender') == 'man' ? 'selected' : '' }}>Man</option>
-                    <option value="woman" {{ old('gender') == 'woman' ? 'selected' : '' }}>Woman</option>
-                    <option value="unisex" {{ old('gender') == 'unisex' ? 'selected' : '' }}>Unisex</option>
-                    <option value="boy" {{ old('gender') == 'boy' ? 'selected' : '' }}>Boy</option>
-                    <option value="girl" {{ old('gender') == 'girl' ? 'selected' : '' }}>Girl</option>
-                </select>
-            </div>
+            <button type="button" class="btn btn-light mt-2" onclick="addCountry()">➕ Add Country</button>
+        </div>
 
-            {{-- Base Price --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Base Price</label>
-                <input type="number" step="0.01" name="base_price" class="form-control" value="{{ old('base_price') }}" required>
-            </div>
+        <div class="mb-3">
+            <label class="form-label text-light">Sizes & Stock</label>
 
-            {{-- Description --}}
-            <div class="mb-3">
-                <label class="form-label text-light">Description</label>
-                <textarea name="description" rows="4" class="form-control">{{ old('description') }}</textarea>
-            </div>
+            @foreach($sizes as $size)
+                <div class="row mb-2 align-items-center">
 
-            <button type="submit" class="btn btn-light w-100 mt-3 btn-glow">Add Product</button>
-        </form>
-    </div>
+                    <div class="col-6 text-light">
+                        <input type="checkbox" name="sizes[{{ $size->id }}][active]" value="1">
+                        {{ $size->name }}
+                    </div>
 
-    <style>
-        .form-box { border:1px solid #fff; background:linear-gradient(145deg,#000,#ffd5d5);}
-        .form-control, .form-select { background-color:#000 !important; color:#f5f1f1 !important; border:1px solid #000;}
-        .form-control:focus, .form-select:focus { border-color:#fff; box-shadow:0 0 5px #fff;}
-        .btn-glow { font-weight:bold; border-radius:6px; background:linear-gradient(135deg,#000,#ffd5d5); color:#000; transition:0.3s;}
-        .btn-glow:hover { background:linear-gradient(135deg,#0e0d09,#ffd5d5); box-shadow:0 0 8px #f8f7f2;}
-    </style>
+                    <div class="col-6">
+                        <input type="number"
+                               name="sizes[{{ $size->id }}][stock]"
+                               class="form-control"
+                               placeholder="Stock">
+                    </div>
+
+                </div>
+            @endforeach
+        </div>
+
+        
+        <div class="mb-3">
+            <label class="form-label text-light">Season</label>
+            <select name="season_id" class="form-select" required>
+                @foreach($seasons as $season)
+                    <option value="{{ $season->id }}">{{ $season->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        
+        <div class="mb-3">
+            <label class="form-label text-light">Gender</label>
+            <select name="gender" class="form-select" required>
+                <option value="man">Man</option>
+                <option value="woman">Woman</option>
+                <option value="unisex">Unisex</option>
+                <option value="boy">Boy</option>
+                <option value="girl">Girl</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-light">Base Price</label>
+            <input type="number" step="0.01" name="base_price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-light">Description</label>
+            <textarea name="description" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-light w-100">Add Product</button>
+    </form>
+</div>
+
+<script>
+let index = 1;
+
+function addCountry() {
+    let wrapper = document.getElementById('countries-wrapper');
+
+    let html = `
+    <div class="country-item d-flex gap-2 mb-2">
+
+        <select name="countries[${index}][id]" class="form-select" required>
+            <option value="">Country</option>
+            @foreach($countries as $country)
+                <option value="{{ $country->id }}">{{ $country->name }}</option>
+            @endforeach
+        </select>
+
+        <input type="number" step="0.01" name="countries[${index}][price]" class="form-control" placeholder="Price" required>
+
+        <select name="countries[${index}][currency]" class="form-select" required>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="CAD">CAD</option>
+            <option value="TRY">TRY</option>
+        </select>
+
+        <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">❌</button>
+
+    </div>`;
+
+    wrapper.insertAdjacentHTML('beforeend', html);
+    index++;
+}
+</script>
+
+<style>
+.form-box {
+    border:1px solid #fff;
+    background:linear-gradient(145deg,#000,#ffd5d5);
+}
+.form-control, .form-select {
+    background:#000 !important;
+    color:#fff !important;
+}
+</style>
+
 @endsection
