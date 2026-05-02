@@ -4,11 +4,11 @@
 <div class="container">
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="text-dark fw-bold">Products</h2>
+        <h2 class="text-light fw-bold">Products</h2>
 
-        <a href="{{ route('admin.product.create') }}" class="btn btn-success shadow-sm px-4">
-            ➕ Add Product
-        </a>
+        <a href="{{ route('admin.product.create') }}" class="btn btn-dark shadow-sm px-4">
+                <i class="bi bi-plus-circle me-1"></i> Add
+            </a>
     </div>
 
     <table class="table table-dark table-striped align-middle">
@@ -46,7 +46,7 @@
                 {{-- 🌍 COUNTRIES + PRICES --}}
                 <td>
                     @forelse($product->regionalPrices as $price)
-                        <span class="badge bg-success">
+                        <span class="badge bg-light text-dark">
                             {{ $price->country->name ?? '-' }}:
                             {{ $price->price }}
                         </span>
@@ -58,7 +58,7 @@
                 {{-- 📦 SIZES + STOCK --}}
                 <td>
                     @forelse($product->variants as $variant)
-                        <span class="badge bg-warning text-dark">
+                        <span class="badge bg-light text-dark">
                             {{ $variant->size->name ?? '-' }}
                             ({{ $variant->stock }})
                         </span>
@@ -76,12 +76,12 @@
                     <div class="d-flex gap-2">
 
                         <a href="{{ route('admin.product.show', $product->id) }}"
-                           class="btn btn-info btn-sm">
+                           class="btn btn-light btn-sm">
                             Show
                         </a>
 
                         <a href="{{ route('admin.product.edit', $product->id) }}"
-                           class="btn btn-warning btn-sm">
+                           class="btn btn-light btn-sm">
                             Edit
                         </a>
 
@@ -92,7 +92,7 @@
                             @csrf
                             @method('DELETE')
 
-                            <button class="btn btn-danger btn-sm">
+                            <button class="btn btn-light btn-sm">
                                 Delete
                             </button>
 

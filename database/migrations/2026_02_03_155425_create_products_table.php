@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('size_id')->constrained()->cascadeOnDelete();
             $table->enum('gender', ['man', 'woman', 'boy', 'girl', 'unisex']);
             $table->decimal('base_price', 10, 2);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,17 @@
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </head>
 <body>
+
+<style>
+body {
+            background: radial-gradient(circle at top left, #000, #666);
+            color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('admin.dashboard') }}">AdminPanel</a>

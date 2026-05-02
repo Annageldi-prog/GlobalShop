@@ -7,7 +7,7 @@
 
     <div class="row">
         <div class="col-md-3">
-            <div class="card text-white bg-dark mb-3">
+            <div class="card text-light bg-dark mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Categories</h5>
                     <p class="card-text">{{ \App\Models\Category::count() }}</p>

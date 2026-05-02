@@ -2,8 +2,13 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4 text-dark fw-bold">Categories</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-light fw-bold">Category</h2>
 
+        <a href="{{ route('admin.category.create') }}" class="btn btn-dark shadow-sm px-4">
+                <i class="bi bi-plus-circle me-1"></i> Add
+            </a>
+    </div>
         <table class="table table-dark table-striped align-middle">
             <thead>
             <tr>

@@ -18,12 +18,48 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $products = [
-            ['name' => 'Nike Air Max', 'base_price' => 120, 'description' => 'Спортивная обувь', 'gender' => 'man'],
-            ['name' => 'Adidas Hoodie', 'base_price' => 80, 'description' => 'Тёплая толстовка', 'gender' => 'woman'],
-            ['name' => 'Zara Jacket', 'base_price' => 150, 'description' => 'Стильная куртка', 'gender' => 'woman'],
-            ['name' => 'LocalBrand T-Shirt', 'base_price' => 30, 'description' => 'Футболка на каждый день', 'gender' => 'boy'],
-            ['name' => 'Nike Shorts', 'base_price' => 40, 'description' => 'Спортивные шорты', 'gender' => 'man'],
-            ['name' => 'Adidas Cap', 'base_price' => 25, 'description' => 'Кепка для спорта', 'gender' => 'unisex'],
+            [
+                'name' => 'Nike Air Max',
+                'base_price' => 120,
+                'description' => 'Спортивная обувь',
+                'gender' => 'man',
+                'image' => 'images/7.jpg',
+            ],
+            [
+                'name' => 'Adidas Hoodie',
+                'base_price' => 80,
+                'description' => 'Тёплая толстовка',
+                'gender' => 'woman',
+                'image' => 'images/2.jpg',
+            ],
+            [
+                'name' => 'Zara Jacket',
+                'base_price' => 150,
+                'description' => 'Стильная куртка',
+                'gender' => 'woman',
+                'image' => 'images/4.jpg',
+            ],
+            [
+                'name' => 'LocalBrand T-Shirt',
+                'base_price' => 30,
+                'description' => 'Футболка на каждый день',
+                'gender' => 'boy',
+                'image' => 'images/1.jpg',
+            ],
+            [
+                'name' => 'Nike Shorts',
+                'base_price' => 40,
+                'description' => 'Спортивные шорты',
+                'gender' => 'man',
+                'image' => 'images/6.jpg',
+            ],
+            [
+                'name' => 'Adidas Cap',
+                'base_price' => 25,
+                'description' => 'Кепка для спорта',
+                'gender' => 'unisex',
+                'image' => 'images/3.jpg',
+            ],
         ];
 
         foreach ($products as $p) {
@@ -38,6 +74,7 @@ class ProductSeeder extends Seeder
                     'gender' => $p['gender'],
                     'category_id' => Category::inRandomOrder()->first()?->id,
                     'brand_id' => Brand::inRandomOrder()->first()?->id,
+                    'image' => $p['image'],
                 ]
             );
 
@@ -61,7 +98,7 @@ class ProductSeeder extends Seeder
                     ],
                     [
                         'price' => round($product->base_price * ($country->rate ?? 1), 2),
-                        'currency' => $country->currency ?? 'USD', 
+                        'currency' => $country->currency ?? 'USD',
                     ]
                 );
             }

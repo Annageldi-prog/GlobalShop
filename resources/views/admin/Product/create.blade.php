@@ -5,7 +5,7 @@
 @section('content')
 <div class="container-lg py-4">
 
-    <h2 class="text-dark mb-4 fw-bold">Add Product</h2>
+    <h2 class="text-light mb-4 fw-bold">Add Product</h2>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -17,8 +17,11 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.product.store') }}" method="POST" class="bg-dark p-4 rounded shadow form-box">
-        @csrf
+    <form action="{{ route('admin.product.store') }}"
+      method="POST"
+      enctype="multipart/form-data"
+      class="bg-dark p-4 rounded shadow form-box">       
+       @csrf
 
      
         <div class="mb-3">
@@ -26,6 +29,10 @@
             <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
         </div>
 
+        <div class="mb-3">
+            <label class="form-label text-light">Product Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*">
+        </div>
     
         <div class="mb-3">
             <label class="form-label text-light">Category</label>

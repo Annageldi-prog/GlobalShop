@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h2 class="mb-4 text-dark fw-bold">Countries</h2>
+        <h2 class="mb-4 text-light fw-bold">Countries</h2>
 
         <table class="table table-dark table-striped align-middle">
             <thead>

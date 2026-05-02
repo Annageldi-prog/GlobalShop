@@ -19,7 +19,7 @@
         <div class="actions">
             <a href="#">🔍</a>
             <a href="#">🛒 Cart</a>
-            <a href="#">👤 Login</a>
+            <a href="{{ route('admin.login') }}">👤 Login</a>
         </div>
 
     </div>

@@ -15,6 +15,7 @@ class Product extends Model
         'gender',
         'base_price',
         'description',
+        'image',
     ];
 
 
